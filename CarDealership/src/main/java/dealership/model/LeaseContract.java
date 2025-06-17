@@ -37,7 +37,7 @@ public class LeaseContract {
     }
 
     public java.sql.Date getStartDate() {
-        return startDate;
+        return (java.sql.Date) startDate;
     }
 
     public void setStartDate(Date startDate) {
@@ -45,7 +45,7 @@ public class LeaseContract {
     }
 
     public java.sql.Date getEndDate() {
-        return endDate;
+        return (java.sql.Date) endDate;
     }
 
     public void setEndDate(Date endDate) {

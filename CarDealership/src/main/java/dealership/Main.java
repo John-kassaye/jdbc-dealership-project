@@ -22,8 +22,9 @@ public class Main {
             System.out.println("3 See vehicles by type");
             System.out.println("4 See vehicles with price range");
             System.out.println("5 See vehicles with year range");
-            System.out.println("5 Add vehicles");
-            System.out.println("5 Remove vehicles");
+            System.out.println("6 Add vehicles");
+            System.out.println("7 Remove vehicles");
+            System.out.println("0 Exit");
 
             switch (scanner.nextLine()) {
                 case "1":
@@ -52,15 +53,17 @@ public class Main {
                     print(vehicleDao.findByPriceRange(minYear, maxYear));
                     break;
                 case "6":
+                    System.out.println("What is the VIN?");
+                    String vin = scanner.nextLine();
                     System.out.println("What is the price?");
-                    int price = scanner.nextInt();
+                    int price = Integer.parseInt(scanner.nextLine());
                     System.out.println("What is the year?");
-                    int year = scanner.nextInt();
+                    int year = Integer.parseInt(scanner.nextLine());
                     System.out.println("What is the color?");
                     String color = scanner.nextLine();
                     System.out.println("What is the type?");
                     String type = scanner.nextLine();
-                    vehicleDao.addVehicle(new Vehicle(price,year,color,type));
+                    vehicleDao.addVehicle(new Vehicle(vin,price,year,color,type));
                     break;
                 case "7":
                     System.out.println("What is the vin of the vehicle you want to remove?");

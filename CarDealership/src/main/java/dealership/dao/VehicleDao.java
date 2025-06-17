@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class VehicleDao {
     private DataSource dataSource;
@@ -24,7 +23,7 @@ public class VehicleDao {
         ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                    vehicles.add(new Vehicle(resultSet.getInt("price"),
+                    vehicles.add(new Vehicle(resultSet.getString("VIN"),resultSet.getInt("price"),
                             resultSet.getInt("year"),resultSet.getNString("Color"),
                             resultSet.getNString("type")));
             }
@@ -46,7 +45,7 @@ public class VehicleDao {
             preparedStatement.setInt(2,max);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()){
-                    vehicles.add(new Vehicle(resultSet.getInt("price"),
+                    vehicles.add(new Vehicle(resultSet.getString("VIN"), resultSet.getInt("price"),
                             resultSet.getInt("year"),resultSet.getNString("Color"),
                             resultSet.getNString("type")));
                 }
@@ -69,7 +68,7 @@ public class VehicleDao {
             preparedStatement.setInt(2,maxYear);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()){
-                    vehicles.add(new Vehicle(resultSet.getInt("price"),
+                    vehicles.add(new Vehicle(resultSet.getString("VIN"), resultSet.getInt("price"),
                             resultSet.getInt("year"),resultSet.getNString("Color"),
                             resultSet.getNString("type")));
                 }
@@ -91,7 +90,7 @@ public class VehicleDao {
             preparedStatement.setString(1,color);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()){
-                    vehicles.add(new Vehicle(resultSet.getInt("price"),
+                    vehicles.add(new Vehicle(resultSet.getString("VIN"), resultSet.getInt("price"),
                             resultSet.getInt("year"),resultSet.getNString("Color"),
                             resultSet.getNString("type")));
                 }
@@ -115,7 +114,7 @@ public class VehicleDao {
             preparedStatement.setString(1,type);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()){
-                    vehicles.add(new Vehicle(resultSet.getInt("price"),
+                    vehicles.add(new Vehicle(resultSet.getString("VIN"),resultSet.getInt("price"),
                             resultSet.getInt("year"),resultSet.getNString("Color"),
                             resultSet.getNString("type")));
                 }
@@ -128,16 +127,17 @@ public class VehicleDao {
     }
 
     public void addVehicle(Vehicle vehicle) {
-        String sql = "INSERT INTO vehicles (price, year, color, type) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO vehicles (vin, price, year, color, type) " +
+                "VALUES (?, ?, ?, ?, ?)";
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            preparedStatement.setInt(1, vehicle.getPrice());
-            preparedStatement.setInt(2, vehicle.getYear());
-            preparedStatement.setString(3, vehicle.getColor());
-            preparedStatement.setString(4, vehicle.getType());
+            preparedStatement.setString(1, vehicle.getVin());
+            preparedStatement.setInt(2, vehicle.getPrice());
+            preparedStatement.setInt(3, vehicle.getYear());
+            preparedStatement.setString(4, vehicle.getColor());
+            preparedStatement.setString(5, vehicle.getType());
 
             preparedStatement.executeUpdate();
             System.out.println("✅ Vehicle added successfully.");

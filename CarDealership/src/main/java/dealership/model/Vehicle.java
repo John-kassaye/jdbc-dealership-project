@@ -5,15 +5,25 @@ public class Vehicle {
     private int year;
     private String color;
     private String type;
+    private String vin;
 
     public Vehicle() {
     }
 
-    public Vehicle(int price, int year, String color, String type) {
+    public Vehicle(String vin, int price, int year, String color, String type) {
         this.price = price;
         this.year = year;
         this.color = color;
         this.type = type;
+        this.vin = vin;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 
     public int getPrice() {
@@ -51,7 +61,8 @@ public class Vehicle {
     @Override
     public String toString() {
         return "Vehicle{" +
-                "price=" + price +
+                " vin='" + vin + '\'' +
+                ", price=" + price +
                 ", year=" + year +
                 ", color='" + color + '\'' +
                 ", type='" + type + '\'' +
